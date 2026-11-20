@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SCD - Controle de Despesas Pessoais</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="container">
+      <p class="eyebrow">PROJETO DIDÁTICO · GESTÃO DA QUALIDADE DE SOFTWARE</p>
+      <h1>Controle de Despesas Pessoais</h1>
+      <p class="subtitle">Cadastro financeiro com acompanhamento da qualidade.</p>
+    </div>
+  </header>
+
+  <main class="container">
+    <nav class="tabs" aria-label="Seções do sistema">
+      <button class="tab active" data-tab="expenses">Despesas</button>
+      <button class="tab" data-tab="quality">Painel da qualidade</button>
+    </nav>
+
+    <section id="expenses" class="tab-panel active">
+      <section class="panel">
+        <div class="section-heading">
+          <div>
+            <h2 id="form-title">Nova despesa</h2>
+            <p>Informe os dados do lançamento.</p>
+          </div>
+          <span class="tag">Cadastro</span>
+        </div>
+
+        <div id="feedback" class="feedback" role="status" aria-live="polite"></div>
+        <form id="expense-form" novalidate>
+          <input type="hidden" id="expense-id">
+          <div class="form-grid">
+            <label>Descrição *
+              <input id="description" maxlength="80" placeholder="Ex.: Almoço" required>
+            </label>
+            <label>Valor (R$) *
+              <input id="amount" type="number" min="0.01" step="0.01" placeholder="35,00" required>
+            </label>
+            <label>Categoria *
+              <select id="category" required>
+                <option value="">Selecione</option>
+                <option>Alimentação</option>
+                <option>Transporte</option>
+                <option>Moradia</option>
+                <option>Lazer</option>
+                <option>Saúde</option>
+                <option>Educação</option>
+                <option>Outros</option>
+              </select>
+            </label>
+            <label>Data *
+              <input id="date" type="date" required>
+            </label>
+          </div>
+          <div class="actions">
+            <button type="submit" class="btn primary" id="save-button">Salvar despesa</button>
+            <button type="button" class="btn secondary" id="cancel-edit" hidden>Cancelar edição</button>
+            <button type="reset" class="btn ghost" id="clear-form">Limpar</button>
+          </div>
+        </form>
+      </section>
+
+      <section class="panel">
+        <div class="section-heading list-heading">
+          <div>
+            <h2>Despesas cadastradas</h2>
+            <p><span id="expense-count">0</span> registro(s)</p>
+          </div>
+          <input id="search" class="search" type="search" placeholder="Buscar por descrição ou categoria" aria-label="Buscar despesas">
+        </div>
+        <div class="table-wrap">
+          <table>
+            <thead>
+              <tr><th>Descrição</th><th>Valor</th><th>Categoria</th><th>Data</th><th>Ações</th></tr>
+            </thead>
+            <tbody id="expense-list">
+              <tr><td colspan="5" class="empty">Nenhuma despesa cadastrada.</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="total-bar">
+          <span>Total geral</span>
+          <strong id="expense-total">R$ 0,00</strong>
+        </div>
+      </section>
+    </section>
+
+    <section id="quality" class="tab-panel">
+      <section class="panel">
+        <div class="section-heading">
+          <div><h2>Painel de Gestão da Qualidade</h2><p>Acompanhe critérios, riscos e oportunidades de melhoria.</p></div>
+          <span class="tag">Gestão</span>
+        </div>
+        <div class="metric-grid">
+          <article class="metric"><span class="label">Despesas cadastradas</span><strong class="value" id="metric-expenses">0</strong></article>
+          <article class="metric"><span class="label">Checklist atendido</span><strong class="value" id="metric-checklist">0%</strong></article>
+          <article class="metric"><span class="label">Riscos monitorados</span><strong class="value" id="metric-risks">0</strong></article>
+          <article class="metric"><span class="label">NCs abertas</span><strong class="value" id="metric-nc">0</strong></article>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Checklist de qualidade</h2>
+        <p class="muted">Marque cada critério após verificar a evidência correspondente.</p>
+        <div id="quality-checklist" class="checklist"></div>
+      </section>
+
+      <section class="panel">
+        <h2>Riscos do projeto</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>Risco</th><th>Probabilidade</th><th>Impacto</th><th>Resposta planejada</th></tr></thead>
+            <tbody id="risk-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Não conformidades</h2>
+        <div class="table-wrap">
+          <table>
+            <thead><tr><th>ID</th><th>Descrição</th><th>Severidade</th><th>Status</th></tr></thead>
+            <tbody id="nc-list"></tbody>
+          </table>
+        </div>
+      </section>
+
+      <section class="panel">
+        <h2>Ciclo de melhoria contínua - PDCA</h2>
+        <div class="pdca-grid">
+          <article class="pdca-item"><b>Planejar (Plan)</b><p>Definir requisitos, critérios e riscos prioritários.</p></article>
+          <article class="pdca-item"><b>Executar (Do)</b><p>Implementar o cadastro e aplicar validações.</p></article>
+          <article class="pdca-item"><b>Verificar (Check)</b><p>Executar testes e conferir indicadores.</p></article>
+          <article class="pdca-item"><b>Agir (Act)</b><p>Corrigir causas e padronizar melhorias.</p></article>
+        </div>
+      </section>
+    </section>
+
+    <p class="disclaimer">Aplicação didática. Os dados são armazenados apenas neste navegador.</p>
+  </main>
+  <script src="app.js"></script>
+</body>
+</html>
