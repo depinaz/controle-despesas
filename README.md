@@ -10,7 +10,7 @@ O **Sistema de Controle de Despesas Pessoais (SCD)** é uma aplicação web fron
 2. Abra o arquivo **`index.html`** em qualquer navegador moderno (Chrome, Edge, Firefox).
 3. A aplicação possui **duas abas principais**:
    - **Despesas** — cadastro, edição, exclusão, filtro e totalização.
-   - **Qualidade** — painel com checklist, indicadores e ciclo PDCA.
+   - **Painel da qualidade** — painel interativo com checklist, riscos, não conformidades, indicadores e ciclo PDCA.
 4. **Não é necessário back-end nem servidor local.** Todos os dados são persistidos no **LocalStorage** do navegador.
 
 > **Dica:** para resetar os dados, limpe o LocalStorage pelo DevTools do navegador (`F12 → Application → Local Storage`).
@@ -19,15 +19,15 @@ O **Sistema de Controle de Despesas Pessoais (SCD)** é uma aplicação web fron
 
 ## 2. Funcionalidades
 
-- **CRUD de despesas** — cadastro com descrição, valor (R$), categoria e data.
+- **CRUD de despesas** — cadastro com descrição, valor (R$), categoria padronizada e data.
 - **Validação de campos obrigatórios e valores monetários** — impede o envio de formulários incompletos ou com formatos inválidos.
-- **Bloqueio de valores negativos ou zero** — apenas valores positivos são aceitos.
-- **Cálculo automático do total** — a soma das despesas é atualizada em tempo real.
-- **Filtro por categoria ou descrição** — localização rápida de registros.
-- **Confirmação de exclusão e mensagens de retorno** — feedback visual para cada ação do usuário.
-- **Painel de qualidade com checklist e indicadores** — acompanhamento das práticas de qualidade adotadas no projeto.
-- **Lista de riscos e não conformidades** — identificação, classificação e plano de resposta.
-- **Visão do ciclo PDCA** — representação das etapas Plan-Do-Check-Act aplicadas ao projeto.
+- **Bloqueio de valores negativos ou zero** — apenas valores positivos e numéricos válidos são aceitos.
+- **Cálculo automático do total** — o somatório das despesas é atualizado em tempo real em todas as operações.
+- **Filtro por categoria ou descrição** — localização e filtragem dinâmica de registros na listagem.
+- **Confirmação de exclusão e mensagens de retorno** — diálogo nativo de confirmação e alertas visuais de sucesso e erro.
+- **Painel da qualidade com checklist e indicadores** — acompanhamento das práticas de qualidade adotadas no projeto com cálculo do índice de conformidade.
+- **Lista de riscos e não conformidades** — identificação, classificação por severidade e planos de ação corretiva.
+- **Visão do ciclo PDCA** — representação prática das etapas Plan-Do-Check-Act aplicadas à melhoria do sistema.
 
 ---
 
@@ -35,50 +35,36 @@ O **Sistema de Controle de Despesas Pessoais (SCD)** é uma aplicação web fron
 
 | Conteúdo | Evidência no projeto |
 |---|---|
-| Planejamento da Qualidade | Definição de requisitos, critérios de aceitação e checklist antes da codificação. |
-| Controle da Qualidade | Validações em tempo real nos formulários e testes manuais documentados. |
-| Garantia da Qualidade | Checklist de boas práticas e revisão por pares na aba Qualidade. |
-| Melhoria Contínua (PDCA) | Ciclo Plan-Do-Check-Act visível no painel, com ações corretivas registradas. |
-| Gestão de Riscos | Matriz de riscos com probabilidade, impacto e plano de mitigação. |
-| Não Conformidades | Registro de não conformidades encontradas e ações corretivas aplicadas. |
-| Indicadores de Qualidade | Métricas visuais (total de despesas, cobertura do checklist, riscos abertos). |
-| Requisitos de Software | Funcionalidades mapeadas a partir dos requisitos definidos na documentação. |
+| Planejamento da Qualidade | Definição de requisitos, escopo, critérios de aceitação e papéis da equipe. |
+| Controle da Qualidade | Execução e aprovação de 5 casos de teste funcionais com evidências visuais registradas. |
+| Garantia da Qualidade | Checklist de inspeção com 9 critérios avaliados e 100% de conformidade. |
+| Melhoria Contínua (PDCA) | Ciclo Plan-Do-Check-Act formalizado e aplicado na padronização da categorização de despesas. |
+| Gestão de Riscos | Matriz de riscos monitorando probabilidade, impacto e respostas planejadas. |
+| Não Conformidades | Registro e resolução integral das NCs identificadas (NC01 e NC02) com testes de regressão. |
+| Indicadores de Qualidade | Métricas no painel (conformidade do checklist, aprovação de testes, resolução de NCs). |
+| Requisitos de Software | Implementação orientada pelos requisitos funcionais (RF01 a RF06) e não funcionais (RNF01 a RNF05). |
 
 ---
 
 ## 4. Documentos de referência
 
-A pasta **`documentacao/`** contém os artefatos de apoio ao projeto:
+A pasta **`documentacao/`** contém todos os artefatos de qualidade do projeto:
 
 | Documento | Descrição |
 |---|---|
-| `plano_gestao_qualidade.md` | Plano de Qualidade do projeto (objetivos, escopo, critérios e papéis). |
-| `criterios_checklist.md` | Checklist de verificação de qualidade. |
-| `matriz_riscos.md` | Matriz de riscos com classificação e plano de resposta. |
-| `registro_nao_conformidades.md` | Registro de não conformidades e ações corretivas. |
-| `indicadores_pdca.md` | Indicadores e descrição do ciclo PDCA aplicado ao projeto. |
-| `casos_teste.md` | Plano e resultados dos casos CT01 a CT05. |
-
-> **Nota:** os nomes e formatos dos arquivos podem variar conforme a evolução do projeto. Consulte a pasta `documentacao/` para a versão mais atualizada.
-
----
-
-## 5. Orientação para a atividade
-
-Para a apresentação e revisão em grupo, siga os passos abaixo:
-
-1. **Cada integrante** deve clonar o repositório e executar a aplicação localmente.
-2. **Explorar as duas abas** (Despesas e Qualidade) e verificar se todas as funcionalidades listadas na Seção 2 estão operacionais.
-3. **Revisar a documentação** na pasta `documentacao/` e validar a coerência entre os artefatos e a implementação.
-4. **Registrar eventuais não conformidades** encontradas durante a revisão e sugerir ações corretivas.
-5. **Preencher o checklist de qualidade** indicando os itens atendidos e os que necessitam de ajuste.
-6. **Preparar uma breve apresentação** destacando: funcionalidades implementadas, práticas de qualidade adotadas, riscos identificados e lições aprendidas.
+| [`plano_gestao_qualidade.md`](documentacao/plano_gestao_qualidade.md) | Plano de Gestão da Qualidade completo (12 seções alinhadas ao modelo de referência). |
+| [`casos_teste.md`](documentacao/casos_teste.md) | Plano e resultados dos casos de teste (CT01 a CT05) com capturas de tela. |
+| [`criterios_checklist.md`](documentacao/criterios_checklist.md) | Checklist de qualidade auditado (Q01 a Q09) com 100% de conformidade e links de evidências. |
+| [`indicadores_pdca.md`](documentacao/indicadores_pdca.md) | Consolidação dos indicadores quantitativos e detalhamento do ciclo PDCA. |
+| [`matriz_riscos.md`](documentacao/matriz_riscos.md) | Matriz de riscos com probabilidades, impactos e planos de contingência. |
+| [`registro_nao_conformidades.md`](documentacao/registro_nao_conformidades.md) | Registro formal das não conformidades identificadas, tratadas e corrigidas. |
+| [`evidencias/`](documentacao/evidencias/) | Diretório contendo todas as capturas de tela comprovando a execução dos testes. |
 
 ---
 
-## 6. Limitações
+## 5. Limitações
 
 - **Sem integração bancária** — os dados de despesas são inseridos manualmente; não há conexão com APIs de bancos ou instituições financeiras.
-- **Limites do LocalStorage** — o armazenamento é restrito ao navegador utilizado (~5 MB). Limpar os dados do navegador apaga todas as despesas cadastradas.
+- **Armazenamento em LocalStorage** — os dados ficam restritos ao navegador utilizado (~5 MB). Limpar o histórico/dados do navegador remove as despesas cadastradas.
 - **Dados didáticos** — os valores e categorias são fictícios, utilizados exclusivamente para fins acadêmicos.
 - **Sem dados pessoais sensíveis** — a aplicação não coleta, armazena nem transmite informações pessoais reais dos usuários.
