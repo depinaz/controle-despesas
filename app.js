@@ -1,6 +1,7 @@
 (() => {
   const EXPENSE_KEY = "scd_expenses_v1";
   const CHECK_KEY = "scd_quality_check_v1";
+  const NC_KEY = "scd_non_conformities_v1";
 
   const qualityItems = [
     { id: "Q01", title: "Campos obrigatórios validados", evidence: "Tentar salvar sem descrição, valor, categoria ou data." },
@@ -16,7 +17,8 @@
   const risks = [
     ["Perda de dados no LocalStorage", "Média", "Alta", "Testar recarregamento e tratar erros de parsing."],
     ["Interface incompatível em telas móveis", "Média", "Média", "Usar CSS responsivo e validar no simulador."],
-    ["Complexidade do escopo exceder o prazo", "Média", "Alta", "Manter somente o núcleo das funcionalidades."]
+    ["Complexidade do escopo exceder o prazo", "Média", "Alta", "Manter somente o núcleo das funcionalidades."],
+    ["Formatação monetária inconsistente", "Média", "Médio", "Padronizar entrada e exibição em reais."]
   ];
   const nonConformities = [
     { id: "NC01", description: "O sistema aceitava valores negativos ou zero.", severity: "Alta", status: "Corrigida" },
@@ -34,6 +36,11 @@
 
   let expenses = loadJSON(EXPENSE_KEY, []);
   let checklistState = loadJSON(CHECK_KEY, {});
+  let nonConformityState = loadJSON(NC_KEY, {});
+
+  nonConformities.forEach(nc => {
+    nc.status = nonConformityState[nc.id] || nc.status;
+  });
 
   function loadJSON(key, fallback) {
     try {
@@ -68,17 +75,27 @@
   function getExpense() {
     return { description: val("description"), amount: val("amount"), category: val("category"), date: val("date") };
   }
+  function isValidDate(date) {
+    if (!/^\d{4}-\d{2}-\d{2}$/.test(date)) return false;
+    const [year, month, day] = date.split("-").map(Number);
+    const parsed = new Date(Date.UTC(year, month - 1, day));
+    return parsed.getUTCFullYear() === year &&
+      parsed.getUTCMonth() === month - 1 &&
+      parsed.getUTCDate() === day;
+  }
   function validateExpense(expense, editingId = null) {
     const errors = [];
     if (!expense.description) errors.push("Informe a descrição.");
     const amount = Number(expense.amount);
     if (!expense.amount || !Number.isFinite(amount) || amount <= 0) {
       errors.push("Informe um valor maior que zero.");
+    } else if (Math.abs(amount * 100 - Math.round(amount * 100)) > 0.000001) {
+      errors.push("Informe o valor com no máximo duas casas decimais.");
     }
     if (!expense.category) errors.push("Selecione uma categoria.");
     if (!expense.date) {
       errors.push("Informe a data.");
-    } else if (!/^\d{4}-\d{2}-\d{2}$/.test(expense.date)) {
+    } else if (!isValidDate(expense.date)) {
       errors.push("Informe uma data válida.");
     }
     return errors;
@@ -208,7 +225,10 @@
       const select = event.target.closest("select[data-nc]");
       if (!select) return;
       const nc = nonConformities.find(item => item.id === select.dataset.nc);
+      if (!nc) return;
       nc.status = select.value;
+      nonConformityState[nc.id] = nc.status;
+      saveJSON(NC_KEY, nonConformityState);
       renderMetrics();
     });
   }
